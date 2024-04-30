@@ -55,15 +55,17 @@ class _ListaPageState extends State<ListaPage> {
           return ListTile(
             leading: CircleAvatar(
               backgroundImage: 
-                NetworkImage('https://i.pravatar.cc/150'),
+                NetworkImage('https://i.pravatar.cc/150?img=?'),
             ),
             title: Text(contatos[index].nomeCompleto),
             subtitle: Text(contatos[index].email),
             trailing: IconButton(
               icon: Icon(contatos[index].isFavorite ? Icons.favorite : Icons.favorite_border),
+              color: contatos[index].isFavorite ? Colors.red : null,
               onPressed: () {
                 setState(() {
                   contatos[index].isFavorite = !contatos[index].isFavorite;
+                  
                 });
               },
             ),
