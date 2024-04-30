@@ -1,6 +1,7 @@
 class Contato {
-  late String nomeCompleto;
-  late String email;
+  String nomeCompleto;
+  String email;
+  bool isFavorite;
 
-  Contato({required this.nomeCompleto, required this.email});
+  Contato({required this.nomeCompleto, required this.email, this.isFavorite = false});
 }

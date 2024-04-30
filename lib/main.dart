@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:checkpoint2/components/Contato.dart';
+import 'package:checkpoint2/components/Contato.dart'; 
 
 void main() {
   runApp(const MyApp());
@@ -8,7 +8,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,26 +21,32 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class ListaPage extends StatelessWidget {
-
+class ListaPage extends StatefulWidget {
   ListaPage({super.key});
-  
 
+  @override
+  _ListaPageState createState() => _ListaPageState();
+}
+
+class _ListaPageState extends State<ListaPage> {
   List<Contato> contatos = [
-    Contato(nomeCompleto: 'Thomas', email: 'gmail'),
-    Contato(nomeCompleto: 'Samoht', email: 'gmail'),
-    Contato(nomeCompleto: 'Mastho', email: 'gmail'),
-    Contato(nomeCompleto: 'Diego', email: 'gmail'),
-    Contato(nomeCompleto: 'Bruna', email: 'gmail'),
+    Contato(nomeCompleto: 'Thomas', email: 'thomas@gmail.com'),
+    Contato(nomeCompleto: 'Samoht', email: 'samoht@gmail.com'),
+    Contato(nomeCompleto: 'Mastho', email: 'mastho@gmail.com'),
+    Contato(nomeCompleto: 'Diego', email: 'diego@gmail.com'),
+    Contato(nomeCompleto: 'Bruna', email: 'bruna@gmail.com'),
   ];
+
+  int countFavorites() {
+    return contatos.where((contato) => contato.isFavorite).length;
+  }
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contatos Favoritos'),
-        backgroundColor:  Colors.blue,
+        title: Text('Contatos Favoritos (${countFavorites()})'),
+        backgroundColor: Colors.blue,
         foregroundColor: Colors.white,
       ),
       body: ListView.builder(
@@ -49,20 +54,19 @@ class ListaPage extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return ListTile(
             leading: CircleAvatar(
-
-              foregroundColor: Colors.white,
-              child: Text(contatos[index].nomeCompleto[0]),
-              backgroundColor: Colors.blue,
-
-              ),
+              backgroundImage: 
+                NetworkImage('https://i.pravatar.cc/150'),
+            ),
             title: Text(contatos[index].nomeCompleto),
             subtitle: Text(contatos[index].email),
             trailing: IconButton(
-              icon: Icon(Icons.favorite_border),
-              onPressed: (){
-                
+              icon: Icon(contatos[index].isFavorite ? Icons.favorite : Icons.favorite_border),
+              onPressed: () {
+                setState(() {
+                  contatos[index].isFavorite = !contatos[index].isFavorite;
+                });
               },
-              ),
+            ),
           );
         },
       ),
